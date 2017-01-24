@@ -176,21 +176,48 @@ var noX = (input) => {
 // array6([1, 6, 4], 0) → true
 // array6([1, 4], 0) → false
 // array6([6], 0) → true
-
 var array6 = (arr, index) => {
-    if (index > 0) {
-        arr.slice(index);
+    hasSix = arr[index] === 6 ? true : false;
+    if (hasSix) {
+        return true;
     }
-    var isSix = arr[0] === 6 ? true : false
-    if (arr.length === 1) {
-        return isSix;
-    } else {
-        arr.shift();
-        return isSix ? true : array6(arr, 0);
+    return index === arr.length - 1 ? hasSix : array6(arr, index + 1);
+}
+
+
+// Given an array of ints, compute recursively the number of times that the value 11 appears in the array. We'll use the convention of considering only the part of the array that begins at the given index. In this way, a recursive call can pass index+1 to move down the array. The initial call will pass in index as 0.
+// array11([1, 2, 11], 0) → 1
+// array11([11, 11], 0) → 2
+// array11([1, 2, 3, 4], 0) → 0
+var array11 = (arr, index) => {
+    hasEleven = arr[index] === 11 ? 1 : 0;
+    return index === arr.length - 1 ? hasEleven : hasEleven + array11(arr, index + 1);
+}
+
+
+// Given an array of ints, compute recursively if the array contains somewhere a value followed in the array by that value times 10. We'll use the convention of considering only the part of the array that begins at the given index. In this way, a recursive call can pass index+1 to move down the array. The initial call will pass in index as 0.
+// array220([1, 2, 20], 0) → true
+// array220([3, 30], 0) → true
+// array220([3], 0) → false
+var array220 = (arr, index) => {
+    if (index === arr.length - 1) {
+        return false;
     }
+    isMult = arr[index] * 10 === arr[index + 1] ? true : false;
+    return isMult ? isMult : array220(arr, index + 1);
+}
+
+
+// Given a string, compute recursively a new string where all the adjacent chars are now separated by a "*".
+// allStar("hello") → "h*e*l*l*o"
+// allStar("abc") → "a*b*c"
+// allStar("ab") → "a*b"
+var allStar = (input) => {
+    var str = input[0] + '*';
+    return input.length === 1 ? input[0] : str + allStar(input.substring(1))
 }
 
 (() => {
     'use strict';
-    console.log(array6([1,2,3,4,5], 0));
+    console.log(allStar("hello"));
 })();
